@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Spreadsheet</title>
+<style type="text/css">
+  td {
+    padding:10px;
+  }
+  button {
+    margin-right:5px;
+  }
+</style>
+</head>
+
+<body>
+<table id="myTable" border="0" cellpadding="0" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Student ID</th>
+      <th>Faculty</th>
+      <th>Major</th>
+      <th>Minor</th>
+      <th>Year</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="myTBody">
+    <tr id= "row1ID" class="row1">
+      <td class="row1" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row1" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row1" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row1" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row1" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row1" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td>
+        <button class="row1" onclick="lineUp(this.className)">Up</button>
+        <button class="row1" onclick="lineDown(this.className)">Dn</button>
+        <button class="row1" onclick="lineDelete(this.className)">Del</button>
+      </td>
+    </tr>
+    <tr id= "row2ID" class="row2">
+      <td class="row2" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row2" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row2" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row2" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row2" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row2" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td>
+        <button class="row2" onclick="lineUp(this.className)">Up</button>
+        <button class="row2" onclick="lineDown(this.className)">Dn</button>
+        <button class="row2" onclick="lineDelete(this.className)">Del</button>
+      </td>
+    </tr>
+    <tr id= "row3ID" class="row3">
+      <td class="row3" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row3" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row3" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row3" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row3" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td class="row3" onclick = "highlight(this.className)" ><input type="text" /></td>
+      <td>
+        <button class="row3" onclick="lineUp(this.className)">Up</button>
+        <button class="row3" onclick="lineDown(this.className)">Dn</button>
+        <button class="row3" onclick="lineDelete(this.className)">Del</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button id="newRowBtn" onclick="lineNew()">New row</button>
+<script>
+
+  //Creates a new row
+  function lineNew() {
+    var table = document.getElementById("myTable");
+    var tbody = document.getElementById("myTBody");
+    var rows = tbody.children;
+    var newRowPos = rows.length+1;
+
+    var newRow = table.insertRow(newRowPos);
+    var rowID = newRow.setAttribute("id", "row"+newRowPos+"ID")
+    var rowClass = newRow.setAttribute("class", "row"+newRowPos);
+    var cell1 = newRow.insertCell(0);
+    cell1.setAttribute("class", "row"+newRowPos);
+    cell1.setAttribute("onclick", "highlight(this.className)");
+    var cell2 = newRow.insertCell(1);
+    cell2.setAttribute("class", "row"+newRowPos);
+    cell2.setAttribute("onclick", "highlight(this.className)");
+    var cell3 = newRow.insertCell(2);
+    cell3.setAttribute("class", "row"+newRowPos);
+    cell3.setAttribute("onclick", "highlight(this.className)");
+    var cell4 = newRow.insertCell(3);
+    cell4.setAttribute("class", "row"+newRowPos);
+    cell4.setAttribute("onclick", "highlight(this.className)");
+    var cell5 = newRow.insertCell(4);
+    cell5.setAttribute("class", "row"+newRowPos);
+    cell5.setAttribute("onclick", "highlight(this.className)");
+    var cell6 = newRow.insertCell(5);
+    cell6.setAttribute("class", "row"+newRowPos);
+    cell6.setAttribute("onclick", "highlight(this.className)");
+    var cell7 = newRow.insertCell(6);
+
+    cell1.innerHTML = "<input type=\"text\" />";
+    cell2.innerHTML = "<input type=\"text\" />";
+    cell3.innerHTML = "<input type=\"text\" />";
+    cell4.innerHTML = "<input type=\"text\" />";
+    cell5.innerHTML = "<input type=\"text\" />";
+    cell6.innerHTML = "<input type=\"text\" />";
+
+    cell7.innerHTML += " ";
+    var btn1 = document.createElement("BUTTON");
+    btn1.setAttribute("class", "row"+newRowPos);
+    btn1.setAttribute("onclick", "lineUp(this.className)");
+    btn1.innerHTML = "Up";
+    cell7.appendChild(btn1);
+    cell7.innerHTML += " ";
+    var btn2 = document.createElement("BUTTON");
+    btn2.setAttribute("class", "row"+newRowPos);
+    btn2.setAttribute("onclick", "lineDown(this.className)");
+    btn2.innerHTML = "Dn";
+    cell7.appendChild(btn2);
+    cell7.innerHTML += " ";
+    var btn3 = document.createElement("BUTTON");
+    btn3.setAttribute("class", "row"+newRowPos);
+    btn3.setAttribute("onclick", "lineDelete(this.className)");
+    btn3.innerHTML = "Del";
+    cell7.appendChild(btn3);
+    cell7.innerHTML += " ";
+  }
+
+  //Deletes a row from the table
+  function lineDelete(clickedClass) {
+    var table = document.getElementById("myTable");
+    var tbody = document.getElementById("myTBody");
+    var rows = tbody.children;
+    var numberRows = rows.length;
+
+    var currRow, rowNum;
+    var i;
+    for (i = 0;i < numberRows; i++) {
+      var rowClass = rows[i].getAttribute("class");
+      if (rowClass == clickedClass) {
+        currRow = rows[i];
+        rowNum = i+1;
+        break;
+      }
+    }
+    if (rowNum != 0) {
+      table.deleteRow(rowNum);
+    }
+
+    if (rowNum < numberRows) {
+      numberRows--;
+      for (i = (rowNum-1);i < numberRows; i++) {
+        rows[i].setAttribute("id", "row"+(i+1)+"ID");
+        rows[i].setAttribute("class", "row"+(i+1));
+        let j;
+        for (j = 0;j < 6; j++) {
+          rows[i].cells[j].setAttribute("class", "row"+(i+1));
+        }
+        rows[i].cells[6].childNodes[1].setAttribute("class", "row"+(i+1));
+        rows[i].cells[6].childNodes[3].setAttribute("class", "row"+(i+1));
+        rows[i].cells[6].childNodes[5].setAttribute("class", "row"+(i+1));
+      }
+    }
+  }
+
+  //Moves a row 1 position up in the table
+  function lineUp(clickedClass) {
+    var table = document.getElementById("myTable");
+    var tbody = document.getElementById("myTBody");
+    var rows = tbody.children;
+    var numberRows = rows.length;
+
+    var rowClass1, rowClass2;
+    var rowID1, rowID2;
+    var rowNum1, rowNum2;
+    var i;
+    for (i = 0; i < numberRows; i++) {
+      rowClass1 = rows[i].className;
+      if (rowClass1 == clickedClass) {
+        rowID1 = rows[i].getAttribute("id");
+        rowNum1 = i+1;
+        if (i != 0) {
+          rowID2 = rows[i-1].getAttribute("id");
+          rowClass2 = rows[i-1].className;
+          rowNum2 = i;
+        }
+        break;
+      }
+    }
+    //Does nothing if the row is already at the 1st position in the table
+    if (rowNum1 == 1) {
+      return;
+    }
+
+    var rowAbove = document.getElementById(rowID2);
+    var rowBelow = document.getElementById(rowID1);
+
+    var p = rowBelow.parentNode;
+    p.insertBefore(rowBelow, rowAbove);
+
+    rowBelow.setAttribute("id", rowID2);
+    rowBelow.setAttribute("class", rowClass2);
+    rowAbove.setAttribute("id", rowID1);
+    rowAbove.setAttribute("class", rowClass1);
+
+    for (i = 0; i < 6; i++) {
+      rowBelow.cells[i].setAttribute("class", rowClass2);
+      rowAbove.cells[i].setAttribute("class", rowClass1);
+    }
+
+    rowBelow.cells[6].childNodes[1].setAttribute("class", rowClass2);
+    rowBelow.cells[6].childNodes[3].setAttribute("class", rowClass2);
+    rowBelow.cells[6].childNodes[5].setAttribute("class", rowClass2);
+    rowAbove.cells[6].childNodes[1].setAttribute("class", rowClass1);
+    rowAbove.cells[6].childNodes[3].setAttribute("class", rowClass1);
+    rowAbove.cells[6].childNodes[5].setAttribute("class", rowClass1);
+  }
+
+  //Moves a row 1 position down in the table
+  function lineDown(clickedClass) {
+    var table = document.getElementById("myTable");
+    var tbody = document.getElementById("myTBody");
+    var rows = tbody.children;
+    var numberRows = rows.length;
+
+    var rowClass1, rowClass2;
+    var rowID1, rowID2;
+    var rowNum1, rowNum2;
+    var i;
+    for (i = 0; i < numberRows; i++) {
+      rowClass1 = rows[i].className;
+      if (rowClass1 == clickedClass) {
+        rowID1 = rows[i].getAttribute("id");
+        rowNum1 = i+1;
+        if (i != (numberRows-1)) {
+          rowID2 = rows[i+1].getAttribute("id");
+          rowClass2 = rows[i+1].className;
+          rowNum2 = i+2;
+        }
+        break;
+      }
+    }
+    //Does nothing if the row is already at the last position in the table
+    if (rowNum1 == (numberRows)) {
+      return;
+    }
+
+    var rowAbove = document.getElementById(rowID1);
+    var rowBelow = document.getElementById(rowID2);
+
+    var p = rowBelow.parentNode;
+    p.insertBefore(rowBelow, rowAbove);
+
+    rowAbove.setAttribute("id", rowID2);
+    rowAbove.setAttribute("class", rowClass2);
+    rowBelow.setAttribute("id", rowID1);
+    rowBelow.setAttribute("class", rowClass1);
+
+    for (i = 0; i < 6; i++) {
+      rowAbove.cells[i].setAttribute("class", rowClass2);
+      rowBelow.cells[i].setAttribute("class", rowClass1);
+    }
+
+    rowAbove.cells[6].childNodes[1].setAttribute("class", rowClass2);
+    rowAbove.cells[6].childNodes[3].setAttribute("class", rowClass2);
+    rowAbove.cells[6].childNodes[5].setAttribute("class", rowClass2);
+    rowBelow.cells[6].childNodes[1].setAttribute("class", rowClass1);
+    rowBelow.cells[6].childNodes[3].setAttribute("class", rowClass1);
+    rowBelow.cells[6].childNodes[5].setAttribute("class", rowClass1);
+  }
+
+  //Changes color of current row to yellow
+  function highlight(clickedClass) {
+    var table = document.getElementById("myTable");
+    var tbody = document.getElementById("myTBody");
+    var rows = tbody.children;
+    var numberRows = rows.length;
+
+    var i;
+    for (i = 0; i < numberRows; i++) {
+      if (rows[i].className == clickedClass) {
+        rows[i].style.backgroundColor = "yellow";
+      } else {
+        rows[i].style.backgroundColor = "white";
+      }
+    }
+  }
+</script>
+</body>
+
+</html>
